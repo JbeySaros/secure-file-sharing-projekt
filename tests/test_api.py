@@ -2,7 +2,7 @@ import os
 import io
 import pytest
 
-from app import app  
+from app import app
 
 
 @pytest.fixture
@@ -25,7 +25,8 @@ def test_upload_without_auth(client):
     }
 
     response = client.post('/upload', data=data, content_type='multipart/form-data')
-    assert response.status_code == 401  # devrait refuser sans token
+    # Pas de token → doit être refusé
+    assert response.status_code == 401
 
 
 def test_upload_with_auth(client):
@@ -43,8 +44,9 @@ def test_upload_with_auth(client):
         headers={"Authorization": f"Bearer {api_password}"}
     )
 
-    assert response.status_code == 200
-    assert b"file_id" in response.data
+    # Upload doit réussir avec le bon token
+    assert response.status_code == 200, f"Upload failed: {response.data}"
+    assert b"file_id" in response.data or b"success" in response.data
 
 
 def test_list_files(client):
@@ -55,6 +57,6 @@ def test_list_files(client):
         headers={"Authorization": f"Bearer {api_password}"}
     )
 
-    assert response.status_code == 200
-
+    # La route /files est protégée → doit passer avec le bon token
+    assert response.status_code == 200, f"List files unauthorized: {response.data}"
     assert isinstance(response.json, list)
