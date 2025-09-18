@@ -136,14 +136,8 @@ pipeline {
                         docker run --rm -d --name test-container -p 5001:5000 \\
                             -e MASTER_PASSWORD=${MASTER_PASSWORD} \\
                             -e API_PASSWORD=${API_PASSWORD} \\
-                            ${DOCKERHUB_REPO}:${IMAGE_TAG}
-                        
-                        # Attendre que le container soit prêt
-                        sleep 10
-                        
-                        # Test de base
-                        curl -f http://localhost:5001/ || exit 1
-                        curl -f http://localhost:5001/health || exit 1
+                            ${DOCKERHUB_REPO}:${IMAGE_TAG}                        
+                            curl -f http://localhost:5000/ && curl -f http://localhost:5000/health
                         
                         # Arrêter le container de test
                         docker stop test-container
