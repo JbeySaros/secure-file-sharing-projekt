@@ -95,7 +95,7 @@ pipeline {
                         pip install -r requirements.txt
                         
                         echo " Running unit tests..."
-                        python -m pytest tests/ -v --tb=short || exit 1
+                        API_PASSWORD=${API_PASSWORD} python -m pytest tests/ -v --tb=short || exit 1
                         
                         echo "✅ Firsts tests passed!"
                     '''
