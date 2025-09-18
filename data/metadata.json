@@ -2,5 +2,23 @@
   "43b61494-f4f3-460d-9b44-91f0e963a863": {
     "original_name": "test.txt",
     "size": 13
+  },
+  "c892caff-84a9-43f5-a364-221f777d577a": {
+    "original_name": "test.txt",
+    "size": 120,
+    "original_hash": "b6bf3c8149a6db9e64754a42bff0b3252a4ce9853cd6c762191c6414237afffb",
+    "encrypted": true
+  },
+  "16c3ac77-60a3-4365-a1ff-7f42d1dd8d3f": {
+    "original_name": "test.txt",
+    "size": 120,
+    "original_hash": "b6bf3c8149a6db9e64754a42bff0b3252a4ce9853cd6c762191c6414237afffb",
+    "encrypted": true
+  },
+  "d9f8560b-40c5-497b-8e37-8eb7c605eab2": {
+    "original_name": "GROStest.txt",
+    "size": 292,
+    "original_hash": "4f61990f19affd2f0ea58b3c706b2fae7ec7323b5ac6cc61c0651b00f164ac94",
+    "encrypted": true
   }
 }
