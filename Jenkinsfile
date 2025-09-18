@@ -150,12 +150,6 @@ pipeline {
         }
 
         stage('Push to DockerHub') {
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'develop'
-                }
-            }
             steps {
                 script {
                     echo "Pushing to DockerHub..."
@@ -183,9 +177,6 @@ pipeline {
         }
 
         stage('Deploy & Integration Tests') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
                     echo "Deploying and running integration tests..."
