@@ -42,8 +42,13 @@ pipeline {
                 // Checkout du code
                 checkout scm
                 
-                // Afficher les fichiers
+                // Création du venv 
                 sh 'ls -la'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                '''
             }
         }
         
@@ -53,7 +58,6 @@ pipeline {
                     steps {
                         script {
                             sh '''
-                                python3 -m venv venv
                                 . venv/bin/activate
                                 pip install flake8
                                 
