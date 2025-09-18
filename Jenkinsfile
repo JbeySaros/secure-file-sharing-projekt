@@ -148,7 +148,7 @@ pipeline {
             }
         }
         
-        stage(' Push to DockerHub') {
+        stage('Push to DockerHub') {
             when {
                 anyOf {
                     branch 'main'
@@ -157,25 +157,23 @@ pipeline {
             }
             steps {
                 script {
-                    echo " Pushing to DockerHub..."
-                    
-                    // Login DockerHub
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    
-                    // Push toutes les images taguées
-                    sh """
-                        docker push ${DOCKERHUB_REPO}:${IMAGE_TAG}
-                        docker push ${DOCKERHUB_REPO}:latest
-                        docker push ${DOCKERHUB_REPO}:build-${BUILD_NUMBER}
-                    """
-                    
+                    echo "Pushing to DockerHub..."
+
+                    withDockerRegistry([credentialsId: 'dockerhub-credentials', url: 'https://index.docker.io/v1/']) {
+                        // Push toutes les images taguées
+                        docker.image("${DOCKERHUB_REPO}:${IMAGE_TAG}").push()
+                        docker.image("${DOCKERHUB_REPO}:latest").push()
+                        docker.image("${DOCKERHUB_REPO}:build-${BUILD_NUMBER}").push()
+                    }
+
                     echo "✅ Images pushed successfully!"
-                    echo " Available tags:"
-                    echo "   - ${DOCKERHUB_REPO}:${IMAGE_TAG}"
-                    echo "   - ${DOCKERHUB_REPO}:latest"
-                    echo "   - ${DOCKERHUB_REPO}:build-${BUILD_NUMBER}"
+                    echo "Available tags:"
+                    echo "  - ${DOCKERHUB_REPO}:${IMAGE_TAG}"
+                    echo "  - ${DOCKERHUB_REPO}:latest"
+                    echo "  - ${DOCKERHUB_REPO}:build-${BUILD_NUMBER}"
                 }
             }
+        }
             post {
                 always {
                     // Logout DockerHub
